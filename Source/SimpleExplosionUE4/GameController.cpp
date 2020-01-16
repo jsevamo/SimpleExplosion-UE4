@@ -77,7 +77,7 @@ void AGameController::ExplodeAllEnemiesIfHeroIsClicked()
 				 */
 				AActor* enemyActor = AllTheEnemiesActors[i];
 				AEnemy* enemy = Cast<AEnemy>(enemyActor);
-				enemy->Explode();
+				enemy->Explode(hero->GetPos());
 			}
 		}
 

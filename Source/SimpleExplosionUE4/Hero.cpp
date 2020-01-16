@@ -4,6 +4,7 @@
 //Nothing special in this class.
 
 #include "Hero.h"
+#include "Components/StaticMeshComponent.h"
 
 // Sets default values
 AHero::AHero()
@@ -41,5 +42,13 @@ void AHero::setIsClicked(bool set)
 bool AHero::getIsClicked()
 {
 	return bIsClicked;
+}
+
+FVector AHero::GetPos()
+{
+	UStaticMeshComponent * StaticMesh = FindComponentByClass<UStaticMeshComponent>();
+	
+	return StaticMesh->GetComponentLocation();
+	
 }
 

@@ -38,12 +38,11 @@ void AEnemy::Tick(float DeltaTime)
 }
 
 
-void AEnemy::Explode()
+void AEnemy::Explode(FVector heroPos)
 {
 	//The static mesh component handles all the physics. So you just get it and the call the needed function.
 	
-	staticMeshComponent->AddRadialImpulse(FVector(0, 0, 0), 100000, 150000, RIF_Constant, false);
-	Debug.Log("exploded");
+	staticMeshComponent->AddRadialImpulse(heroPos, 100000, 150000, RIF_Constant, false);
 }
 
 AEnemy* AEnemy::ReturnSelf()

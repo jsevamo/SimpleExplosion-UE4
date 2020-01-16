@@ -32,6 +32,7 @@ public:
 
 	void setIsClicked(bool set);
 	bool getIsClicked();
+	FVector GetPos();
 
 private:
 	QuickDebugger Debug;

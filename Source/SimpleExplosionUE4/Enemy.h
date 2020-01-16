@@ -34,7 +34,7 @@ public:
 
 	//Add a radial impulse to each enemy so it explodes.
 	UFUNCTION(BlueprintCallable)
-		void Explode();
+		void Explode(FVector heroPos);
 
 	AEnemy* ReturnSelf();
 
