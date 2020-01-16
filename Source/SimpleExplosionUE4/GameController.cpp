@@ -2,6 +2,9 @@
 
 
 #include "GameController.h"
+#include "Hero.h"
+#include "Enemy.h"
+#include "GameFramework/PlayerController.h"
 
 // Sets default values
 AGameController::AGameController()
@@ -15,6 +18,9 @@ AGameController::AGameController()
 void AGameController::BeginPlay()
 {
 	Super::BeginPlay();
+
+	PlayerController = GetWorld()->GetFirstPlayerController();
+	PlayerController->bShowMouseCursor = true;
 	
 }
 
@@ -23,5 +29,41 @@ void AGameController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	ExplodeAllEnemiesIfHeroIsClicked();
+
+}
+
+void AGameController::SpawnEnemy(TSubclassOf<AActor> _enemy)
+{
+	FActorSpawnParameters Spawn;
+	FVector spawnPos(FMath::RandRange(-400, 400), FMath::RandRange(-400, 400), 200);
+	FRotator spawnRot(0, 0, 0);
+
+	AActor* SpawnedActor = GetWorld()->SpawnActor<AActor>(_enemy, spawnPos, spawnRot, Spawn);
+
+
+	Debug.Log(SpawnedActor->GetName());
+
+	AllTheEnemiesActors.Add(SpawnedActor);
+
+}
+
+void AGameController::ExplodeAllEnemiesIfHeroIsClicked()
+{
+	if (hero->bIsClicked)
+	{
+
+
+		for (int32 i = 0; i < AllTheEnemiesActors.Num(); i++)
+		{
+			AActor* a = AllTheEnemiesActors[i];
+			AEnemy* b = Cast<AEnemy>(a);
+			b->Explode();
+		}
+
+
+
+		hero->setIsClicked(false);
+	}
 }
 

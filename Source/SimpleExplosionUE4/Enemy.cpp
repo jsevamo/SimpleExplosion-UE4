@@ -2,6 +2,10 @@
 
 
 #include "Enemy.h"
+#include "Materials/MaterialInstanceDynamic.h"
+#include "Materials/MaterialInterface.h"
+#include "Materials/Material.h"
+#include <string>
 
 // Sets default values
 AEnemy::AEnemy()
@@ -15,6 +19,13 @@ AEnemy::AEnemy()
 void AEnemy::BeginPlay()
 {
 	Super::BeginPlay();
+
+	//staticMeshComponent = GetOwner()->FindComponentByClass<UStaticMeshComponent>(); There is no owner this time.
+
+
+	staticMeshComponent = FindComponentByClass<UStaticMeshComponent>();
+
+	ChangeMaterialColor();
 	
 }
 
@@ -23,5 +34,37 @@ void AEnemy::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	CheckIfTooLow();
+}
+
+void AEnemy::Explode()
+{
+	staticMeshComponent->AddRadialImpulse(FVector(0, 0, 0), 100000, 150000, RIF_Constant, false);
+	Debug.Log("exploded");
+}
+
+AEnemy* AEnemy::ReturnSelf()
+{
+	return this;
+}
+
+
+void AEnemy::CheckIfTooLow()
+{
+	if (staticMeshComponent->GetComponentLocation().Z < -5000)
+	{
+		staticMeshComponent->SetWorldLocation(FVector(FMath::RandRange(-400, 400), FMath::RandRange(-400, 400), 2000));
+	}
+}
+
+void AEnemy::ChangeMaterialColor()
+{
+	auto Mat = staticMeshComponent->GetMaterial(0);
+
+	DynamicMat = UMaterialInstanceDynamic::Create(Mat, this);
+
+	staticMeshComponent->SetMaterial(0, DynamicMat);
+
+	DynamicMat->SetVectorParameterValue(TEXT("Color"), FLinearColor::MakeRandomColor());
 }
 
