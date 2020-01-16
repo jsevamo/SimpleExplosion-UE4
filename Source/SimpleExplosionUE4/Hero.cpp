@@ -1,6 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
+//Nothing special in this class.
+
 #include "Hero.h"
 
 // Sets default values

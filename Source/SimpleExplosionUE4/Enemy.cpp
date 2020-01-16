@@ -37,8 +37,11 @@ void AEnemy::Tick(float DeltaTime)
 	CheckIfTooLow();
 }
 
+
 void AEnemy::Explode()
 {
+	//The static mesh component handles all the physics. So you just get it and the call the needed function.
+	
 	staticMeshComponent->AddRadialImpulse(FVector(0, 0, 0), 100000, 150000, RIF_Constant, false);
 	Debug.Log("exploded");
 }
@@ -51,6 +54,7 @@ AEnemy* AEnemy::ReturnSelf()
 
 void AEnemy::CheckIfTooLow()
 {
+	//The static mesh component must also be used to get the location of the object in the world.
 	if (staticMeshComponent->GetComponentLocation().Z < -5000)
 	{
 		staticMeshComponent->SetWorldLocation(FVector(FMath::RandRange(-400, 400), FMath::RandRange(-400, 400), 2000));
@@ -59,6 +63,9 @@ void AEnemy::CheckIfTooLow()
 
 void AEnemy::ChangeMaterialColor()
 {
+	//This is how to change the material color. Basically you get the current material, create a new Dynamic Material
+	// with the current one, set the new material and then change the color.
+	
 	auto Mat = staticMeshComponent->GetMaterial(0);
 
 	DynamicMat = UMaterialInstanceDynamic::Create(Mat, this);

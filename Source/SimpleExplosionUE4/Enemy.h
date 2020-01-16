@@ -20,6 +20,7 @@ public:
 	UPROPERTY(EditAnywhere)
 		UStaticMeshComponent* staticMeshComponent;
 
+	//A dynamic instance of a material must be created in order to change the color of the material in real time.
 	UMaterialInstanceDynamic* DynamicMat;
 
 
@@ -31,6 +32,7 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	//Add a radial impulse to each enemy so it explodes.
 	UFUNCTION(BlueprintCallable)
 		void Explode();
 
