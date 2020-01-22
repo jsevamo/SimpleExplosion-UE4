@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "Components/StaticMeshComponent.h"
 #include "QuickDebugger.h"
+#include "Hero.h"
 #include "Enemy.generated.h"
 
 UCLASS()
@@ -23,6 +24,9 @@ public:
 	//A dynamic instance of a material must be created in order to change the color of the material in real time.
 	UMaterialInstanceDynamic* DynamicMat;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		bool bHasBeenClicked;
+		
 
 protected:
 	// Called when the game starts or when spawned
@@ -44,7 +48,11 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void ChangeMaterialColor();
 
+	UFUNCTION(BlueprintCallable)
+		void DeleteEnemy();
+
 private:
 	QuickDebugger Debug;
+
 
 };

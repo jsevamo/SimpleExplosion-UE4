@@ -56,6 +56,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void ExplodeAllEnemiesIfHeroIsClicked();
 
+	UFUNCTION(BlueprintCallable)
+		void CheckIfEnemiesMustBeDeleted();
+
 
 private:
 	QuickDebugger Debug;

@@ -31,6 +31,11 @@ void AGameController::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	ExplodeAllEnemiesIfHeroIsClicked();
+	
+	CheckIfEnemiesMustBeDeleted();
+
+
+		
 
 }
 
@@ -92,5 +97,30 @@ void AGameController::ExplodeAllEnemiesIfHeroIsClicked()
 
 		hero->setIsClicked(false);
 	}
+}
+
+void AGameController::CheckIfEnemiesMustBeDeleted()
+{
+	/*
+	 * Checking if there are enemies on the list, if there are, we go through the list, get each enemy
+	 * as an Actor and Enemy, and if it has been clicked, we remove the actor from the enemy list and
+	 * destroy the actor from the world.
+	 */
+	
+	if (AllTheEnemiesActors.Num() > 0)
+	{
+		for (int32 i = 0; i < AllTheEnemiesActors.Num(); i++)
+		{
+			AActor* enemyActor = AllTheEnemiesActors[i];
+			AEnemy* enemy = Cast<AEnemy>(enemyActor);
+
+			if (enemy->bHasBeenClicked)
+			{
+				AllTheEnemiesActors.Remove(enemyActor);
+				GetWorld()->DestroyActor(enemyActor);
+			}
+		}
+	}
+	
 }
 
